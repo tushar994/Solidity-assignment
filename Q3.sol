@@ -5,6 +5,8 @@ contract CarRental {
         owner = msg.sender;
     }
     mapping (address => uint) rentals;
-    
-    function confirmAgreement()
+    mapping (address => uint) paid;
+    function confirmAgreement(){
+        
+    }
 }

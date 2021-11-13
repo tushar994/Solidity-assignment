@@ -13,7 +13,7 @@ contract Credit{
 
     function Withdraw(uint _amount) public {
         require(credits[msg.sender]>=_amount);
-        msg.sender.tranfer(_amount);
+        msg.sender.transfer(_amount);
         credits[msg.sender] -= _amount;
     }
 }

@@ -1,7 +1,8 @@
-pragma solidity >=0.5.0 <0.6.0;
+pragma solidity >=0.4.0 <0.4.1;
 
-contract Fest {
-    constructor() {
+contract Fest2 {
+    address owner;
+    function constructor() public {
         owner = msg.sender;
     }
     event Desposit(address indexed _from, bytes32 indexed _id, uint _value);
@@ -12,7 +13,9 @@ contract Fest {
     uint max_tickets = 10;
 
     function buyTicket() public payable {
-        require(msg.value == 0.01 ether, "please send only 0.01 ether");
+        if(msg.value != 100 wei){
+            throw;   
+        }
         if(tickets_sold>=max_tickets){
             throw;
         }
@@ -21,13 +24,18 @@ contract Fest {
     }
 
     function refundTicket() public{
-        require(balances[msg.sender]>=1);
-        msg.sender.tranfer(0.01 ether);
+        if(balances[msg.sender]==0){
+            throw;
+        }
+        address sender = msg.sender;
+        bool k = sender.send(100 wei);
         balances[msg.sender]--;
         tickets_sold--;
     }
-    function destroySmartContract(address payable _to) public {
-        require(msg.sender == owner, "You are not the owner");
+    function destroySmartContract(address _to) public {
+        if(msg.sender != owner){
+            throw;
+        }
         selfdestruct(_to);
     }
 }
